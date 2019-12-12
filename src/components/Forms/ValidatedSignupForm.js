@@ -3,25 +3,34 @@ import { Formik } from "formik";
 import * as EmailValidator from "email-validator";
 import * as Yup from "yup";
 
-const ValidatedLoginForm = () => (
+const ValidatedSignupForm = () => (
   <Formik
-    initialValues={{ email: "", password: "" }}
+    initialValues={{ username:"",email: "", password: "", password1:"" }}
     onSubmit={(values, { setSubmitting }) => {
       setTimeout(() => {
-        console.log("Logging in", values);
+        console.log("Signup in", values);
         setSubmitting(false);
       }, 500);
     }}
 
 
     validationSchema={Yup.object().shape({
+        username: Yup.string()
+        .required("Required"),
       email: Yup.string()
         .email()
         .required("Required"),
       password: Yup.string()
         .required("No password provided.")
         .min(8, "Password is too short - should be 8 chars minimum.")
+        .matches(/(?=.*[0-9])/, "Password must contain a number."),
+        password1: Yup.string()
+        .required("No password provided.")
+        .min(8, "Password is too short - should be 8 chars minimum.")
         .matches(/(?=.*[0-9])/, "Password must contain a number.")
+        
+      
+        
     })}
   >
     {props => {
@@ -36,6 +45,20 @@ const ValidatedLoginForm = () => (
       } = props;
       return (
         <form onSubmit={handleSubmit}>
+            <label htmlFor="email">Username</label>
+          <input
+            name="username"
+            type="text"
+            placeholder="Enter your username"
+            value={values.username}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            className={errors.email && touched.email && "error"}
+          />
+          
+          {errors.username && touched.username && (
+            <div className="input-feedback">{errors.username}</div>
+          )}
           <label htmlFor="email">Email</label>
           <input
             name="email"
@@ -62,18 +85,29 @@ const ValidatedLoginForm = () => (
           {errors.password && touched.password && (
             <div className="input-feedback">{errors.password}</div>
           )}
+          <label htmlFor="email">Re-enter Password</label>
+          <input
+            name="password1"
+            type="password"
+            placeholder="Enter your Re-enter password"
+            value={values.password1}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            className={errors.password1 && touched.password1 && "error"}
+          />
+          {errors.password1 && touched.password1 && (
+            <div className="input-feedback">{errors.password1}</div>
+          )}
           <button className="login "type="submit" disabled={isSubmitting}>
             Login
           </button>
-          <button id="signup" type="submit" >
-            
+          <button id="signup" type="submit" disabled={isSubmitting}>
             Signup
           </button>
-          <link to="/SignupForm"></link>
         </form>
       );
     }}
   </Formik>
 );
 
-export default ValidatedLoginForm;
+export default ValidatedSignupForm;
