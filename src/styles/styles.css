@@ -69,6 +69,8 @@ button:hover {
     background-color: white;
     color: rgb(70, 153, 179);
   }
-
+ ul li{
+  text-decoration: none;
+}
 
 
