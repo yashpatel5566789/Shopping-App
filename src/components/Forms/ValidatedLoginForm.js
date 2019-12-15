@@ -13,6 +13,7 @@ const ValidatedLoginForm = () => (
       }, 500);
     }}
 
+    
 
     validationSchema={Yup.object().shape({
       email: Yup.string()

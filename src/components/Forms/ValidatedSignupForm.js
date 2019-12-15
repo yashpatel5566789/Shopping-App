@@ -30,9 +30,11 @@ const ValidatedSignupForm = () => (
         .matches(/(?=.*[0-9])/, "Password must contain a number.")
         
       
+      
         
     })}
   >
+
     {props => {
       const {
         values,
